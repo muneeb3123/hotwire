@@ -1,0 +1,2 @@
+module LivesearchHelper
+end

@@ -1,0 +1,15 @@
+
+<%= turbo_frame_tag "modal" do %>
+<div class="overlay"></div>
+<div class="modal">
+<div class="modal__header">
+<h1>New project</h1>
+<%= link_to '#', class: 'btn', data: { controller: 'modal', action: 'click->modal#close' } do %>
+  <i class="fa-solid fa-xmark" style="color: #ff1900;"></i>
+<% end %>
+</div>
+
+<%= render "form", project: @project %>
+
+</div>
+<% end %>

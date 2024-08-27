@@ -1,0 +1,9 @@
+<div class="suggestions-list">
+<% if results.any? %>
+<% results.each do |result| %>
+<%= link_to result.name, result%>
+<% end %>
+<% else %>
+<div class="no-results">No results found</div>
+</div>
+<% end %>
