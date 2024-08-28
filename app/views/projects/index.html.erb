@@ -6,8 +6,6 @@
   
   <!-- Turbo Frame for Project creation -->
     <%= link_to 'Create Project', new_project_path, class: "btn btn--light new", data: {turbo_frame: "modal" }%>
-
-  <%= turbo_frame_tag Project.new %> 
   
   <!-- Projects List -->
   <%= turbo_frame_tag "projects" do %>

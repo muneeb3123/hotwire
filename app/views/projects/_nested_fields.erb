@@ -1,4 +1,4 @@
-   <%= uf.text_field :email, class: "form__input", placeholder: "enter Email" %>
-      <%= uf.password_field :password, class: "form__input", placeholder: "enter password" %>
-      <%= uf.password_field :password_confirmation, class: "form__input", placeholder: "enter password" %>
-
+<%= uf.text_field :email, class: "form__input", placeholder: "Enter Email" %>
+<%= uf.hidden_field :_destroy, class: "destroy-field" %>
+<%= uf.password_field :password, class: "form__input", placeholder: "Enter Password" %>
+<%= uf.password_field :password_confirmation, class: "form__input", placeholder: "Confirm Password" %>

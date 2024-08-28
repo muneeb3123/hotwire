@@ -8,7 +8,8 @@
                   class: "btn btn--primary" %>
     <%= link_to "Edit",
                 edit_project_path(project),
-                class: "btn btn--light" %>
+                class: "btn btn--light",
+                 data: {turbo_frame: "modal" } %>
   </div>
 </div>
 <% end %>

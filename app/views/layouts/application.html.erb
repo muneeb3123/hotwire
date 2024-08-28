@@ -12,8 +12,8 @@
   </head>
 
   <body>
-     <p class="notice"><%= notice %></p>
-       <p class="alert"><%= alert %></p>
+     <div id="flash" class="flash">
+    </div>
        <%= turbo_frame_tag "modal" %>
     <%= yield %>
   </body>

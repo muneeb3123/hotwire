@@ -1,32 +1,51 @@
-<%= form_with(model: project , html: { class: "project form" }) do |form| %>
-  <% if project.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
-      <ul>
-        <% project.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="fields">
-    <%= form.text_field :name, class: "form__input", placeholder: "Enter project name" %>
-  </div>
-
-  <div class="fields" style="flex-direction: column;" data-controller="nested-form">
-    <%= form.fields_for :users do |f| %>
-      <div class="nested_user_fields" data-nested-form-target="container">
-        <h3>User Fields</h3>
-        <div class="nested_fields">
-          <%= render partial: 'nested_fields', locals: { uf: f } %>
-          <%= link_to '#', data: { controller: 'modal', action: 'click->nested-form#removeField' } do %>
-            <i class="fa-solid fa-trash-can btn" style="color: #ff1900;"></i>
+<%= form_with(model: project) do |form| %>
+  <div class="project form">
+    <% if project.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+        <ul>
+          <% project.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
           <% end %>
-        </div>
+        </ul>
       </div>
     <% end %>
-    <%= button_to "Add user", '#', class: 'btn btn--primary', style: 'width: 100px; flex: start;', data: { action: 'nested-form#addField' } %> 
+
+    <div class="fields">
+      <%= form.text_field :name, class: "form__input", placeholder: "Enter project name" %>
+    </div>
+
+    <div class="fields" style="flex-direction: column;" data-controller="nested-form">
+      <h3>User Fields</h3>
+      <div class="nested_user_fields" data-nested-form-target="container">
+        <%= form.fields_for :users do |f| %>
+          <div class="nested_fields">
+            <% if project.persisted? %>
+              <%= f.hidden_field :_destroy, class: "destroy-field" %>
+              <%= f.text_field :email, disabled: true, class: "form__input" %>
+            <% else %>
+              <%= render partial: 'nested_fields', locals: { uf: f } %>
+            <% end %>
+            <%= link_to '#', data: { action: 'click->nested-form#removeField' } do %>
+              <i class="fa-solid fa-trash-can btn" style="color: #ff1900;"></i>
+            <% end %>
+          </div>
+        <% end %>
+
+        <template class="user-fields-template">
+          <div class="nested_fields">
+            <%= form.fields_for :users, Project.new.users.build do |f| %>
+              <%= render partial: 'nested_fields', locals: { uf: f } %>
+              <%= link_to '#', data: { action: 'click->nested-form#removeField' } do %>
+                <i class="fa-solid fa-trash-can btn" style="color: #ff1900;"></i>
+              <% end %>
+            <% end %>
+          </div>
+        </template>
+      </div>
+
+      <%= link_to "Add user", '#', class: 'btn btn--primary', style: 'width: 100px; flex: start;', data: { action: 'nested-form#addField' } %>
+    </div>
   </div>
-  <%= form.submit "Save", class: "btn btn--secondary", style: 'width: 100px' %>
+      <%= form.submit "Save", class: "btn btn--secondary", style: 'width: 100px' %>
 <% end %>
